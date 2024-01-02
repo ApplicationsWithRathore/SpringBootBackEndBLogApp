@@ -5,6 +5,7 @@ import com.firstapi.payloads.JwtAuthRequest;
 import com.firstapi.payloads.JwtAuthResponse;
 import com.firstapi.payloads.UserDto;
 import com.firstapi.security.JwtTokenHelper;
+import com.firstapi.serviceimpl.UserServiceImpl;
 import com.firstapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private JwtTokenHelper jwtTokenHelper;

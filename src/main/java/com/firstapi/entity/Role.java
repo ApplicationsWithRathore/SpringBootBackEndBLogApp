@@ -11,6 +11,7 @@ import lombok.*;
 @Setter
 @Builder
 @NoArgsConstructor
+@ToString
 @AllArgsConstructor
 public class Role {
     @Id

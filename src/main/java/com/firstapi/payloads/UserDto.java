@@ -1,16 +1,9 @@
 package com.firstapi.payloads;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.firstapi.entity.Comment;
-import com.firstapi.entity.Post;
-import com.firstapi.entity.Role;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor

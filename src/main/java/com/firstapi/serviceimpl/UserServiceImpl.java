@@ -9,6 +9,8 @@ import com.firstapi.repositories.RoleRepo;
 import com.firstapi.repositories.UserRepo;
 import com.firstapi.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,13 +29,22 @@ public class UserServiceImpl implements UserService {
   private PasswordEncoder passwordEncoder;
   @Autowired
   private RoleRepo roleRepo;
+  private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public UserDto registerUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         user.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
-        Role role  = this.roleRepo.findById(AppConstant.ROLE_USER).get();
-        user.setRoles(user.getRoles());
+        logger.info("{}",AppConstant.ROLE_USER);
+
+        Role role = null;
+
+        try {
+            role = this.roleRepo.findById(AppConstant.ROLE_USER).get();
+        }catch (Exception e){
+            logger.error("Error :",e);
+        }
+        user.getRoles().add(role);
         User newUser = this.uR.save(user);
 
         return this.userToDto(newUser);
