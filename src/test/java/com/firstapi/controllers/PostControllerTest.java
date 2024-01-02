@@ -1,10 +1,14 @@
 package com.firstapi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.firstapi.LearningApiApplication;
+import com.firstapi.config;
 import com.firstapi.payloads.CategoryDto;
 import com.firstapi.payloads.PostDto;
 import com.firstapi.payloads.PostResponse;
 import com.firstapi.payloads.UserDto;
+import com.firstapi.repositories.RoleRepo;
+import com.firstapi.security.JwtTokenHelper;
 import com.firstapi.services.PostService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -43,12 +48,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(PostController.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = {config.class, LearningApiApplication.class})
 @ExtendWith(MockitoExtension.class)
 class PostControllerTest {
     @Autowired
     private ObjectMapper mapper;
     @MockBean
     private PostService postService;
+    @MockBean
+    private RoleRepo roleRepo;
+    @MockBean
+    private JwtTokenHelper jwtTokenHelper;
    // private PostController postController;
     @Autowired
     private MockMvc mockMvc;

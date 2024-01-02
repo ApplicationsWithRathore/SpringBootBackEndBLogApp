@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +24,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 @Configuration
 public class config {
@@ -43,8 +48,7 @@ public class config {
          httpSecurity
                  .csrf(AbstractHttpConfigurer::disable)
                  .authorizeHttpRequests(authorize->{
-                     authorize.requestMatchers("/api/v1/auth/register").permitAll()
-                             .anyRequest().authenticated();
+                    authorize.anyRequest().permitAll();
                  });
 
          return httpSecurity.build();
@@ -53,4 +57,9 @@ public class config {
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
          return new JwtAuthenticationFilter();
     }
-*/}
+*/
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+      return authenticationConfiguration.getAuthenticationManager();
+  }
+}

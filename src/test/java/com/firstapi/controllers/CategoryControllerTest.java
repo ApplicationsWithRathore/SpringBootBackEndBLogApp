@@ -1,8 +1,11 @@
 package com.firstapi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.firstapi.LearningApiApplication;
+import com.firstapi.config;
 import com.firstapi.payloads.CategoryDto;
 import com.firstapi.repositories.RoleRepo;
+import com.firstapi.security.JwtTokenHelper;
 import com.firstapi.services.CategoryService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -38,12 +42,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CategoryController.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = {config.class, LearningApiApplication.class
+})
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @MockBean
     private RoleRepo roleRepo;
+
+    @MockBean
+    private JwtTokenHelper jwtTokenHelper;
 
     @Autowired
     private MockMvc mockMvc;

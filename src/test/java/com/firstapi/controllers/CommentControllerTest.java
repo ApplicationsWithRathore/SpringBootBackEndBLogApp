@@ -1,7 +1,11 @@
 package com.firstapi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.firstapi.LearningApiApplication;
+import com.firstapi.config;
 import com.firstapi.payloads.CommentDto;
+import com.firstapi.repositories.RoleRepo;
+import com.firstapi.security.JwtTokenHelper;
 import com.firstapi.services.CommentService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -33,10 +38,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CommentController.class)
 @AutoConfigureMockMvc
+@ContextConfiguration(classes = {config.class, LearningApiApplication.class})
 @ExtendWith(MockitoExtension.class)
 class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private RoleRepo roleRepo;
+    @MockBean
+    private JwtTokenHelper jwtTokenHelper;
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
